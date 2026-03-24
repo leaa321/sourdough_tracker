@@ -18,7 +18,7 @@ function App() {
       <ul>
         {loafes.map((loaf) => (
           <li key={loaf.id}>
-            <LoafItem loaf={loaf}></LoafItem>
+            <LoafItem loaf={loaf} path={loaf.image_path}></LoafItem>
           </li>
         ))}
       </ul>
