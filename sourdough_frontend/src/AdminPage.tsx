@@ -4,7 +4,6 @@ import type { loafUpload } from "./models/loaf";
 import { ToastMessage, useToast } from "./ToastMessage";
 import { checkUser } from "./service/UserService";
 
-
 export function AdminPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthorized, setIsAuthorized] = useState(false);
@@ -33,6 +32,9 @@ export function AdminPage() {
         }
     }
 
+    useEffect(() => {
+        init();
+    }, [])
 
     const handleSubmit: React.SubmitEventHandler<HTMLFormElement> = async (formValue) => {
         formValue.preventDefault();
@@ -51,6 +53,7 @@ export function AdminPage() {
                 image_path: imagePath,
                 tag: tag
             }
+
             await uploadLoaf(loaf);
             showToast("Upload successful");
 
@@ -63,10 +66,6 @@ export function AdminPage() {
             console.error(err);
         }
     }
-
-    useEffect(() => {
-        init();
-    }, [])
 
     if (isLoading) {
         return <div>Loading ...</div>
@@ -83,6 +82,7 @@ export function AdminPage() {
                     <span className="input-title">Title: </span>
                     <input type="text"
                         name="title"
+                        required
                         value={title}
                         onChange={(t) => setTitle(t.target.value)}
                     />
@@ -91,6 +91,7 @@ export function AdminPage() {
                     <span className="input-title">Description: </span>
                     <input type="text"
                         name="description"
+                        required
                         value={description}
                         onChange={(d) => setDescription(d.target.value)}
                     />
@@ -99,6 +100,7 @@ export function AdminPage() {
                     <span className="input-title">Tag: </span>
                     <input type="text"
                         name="tag"
+                        required
                         value={tag}
                         onChange={(t) => setTag(t.target.value)}
                     />
@@ -106,6 +108,7 @@ export function AdminPage() {
                 <div className="input-group">
                     <span className="input-title">Picture: </span>
                     <input type="file"
+                        required
                         accept="image/*"
                         onChange={(f) => {
                             const file = f.target.files?.[0] ?? null;
