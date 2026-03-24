@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import type { loaf } from "./models/loaf";
-import { getLoafPicture } from "./LoafService";
+import { getLoafPicture } from "./service/LoafService";
+import '../src/style/loafitem.scss'
 
 type LoafItem = {
     loaf: loaf;
     path: string;
 }
 
-
 export function LoafItem({ loaf, path }: LoafItem) {
     const [pic, setPic] = useState<string | any>(null);
 
     useEffect(() => {
         async function load() {
-            const url = await getLoafPicture(path);
-            if (url) setPic(url);
+            try {
+                const url = await getLoafPicture(path);
+                if (url) setPic(url);
+            } catch (err) {
+                console.error(err);
+            }
         }
 
         load();
