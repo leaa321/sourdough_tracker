@@ -1,0 +1,4 @@
+export type ingredient = {
+    id: number,
+    title: string
+}

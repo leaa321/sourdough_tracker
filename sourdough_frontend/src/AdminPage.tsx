@@ -13,7 +13,6 @@ export function AdminPage() {
     const [description, setDescription] = useState<string>("");
     const [tag, setTag] = useState<string>("");
 
-
     async function init() {
         try {
             const user = await checkUser();
