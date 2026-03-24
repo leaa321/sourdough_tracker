@@ -1,6 +1,6 @@
-import { data } from "react-router-dom";
 import type { loafUpload } from "../models/loaf";
 import { supabase } from "../utils/supabase";
+import { checkUser } from "./UserService";
 
 export async function getLoafes() {
     const { data, error } = await supabase
@@ -37,33 +37,27 @@ export async function uploadLoaf(loaf: loafUpload) {
     return data;
 }
 
-export async function uploadLoafPicture() {
+export async function uploadLoafImage(file: File) {
+    await checkUser();
 
-}
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${crypto.randomUUID()}.${fileExt}`;
 
-export async function checkUser() {
-    const { data: { user } } = await supabase
-        .auth
-        .getUser();
-
-    if (!user) {
-        throw new Error('No user logged in')
-    }
-
-    return data;
-}
-
-export async function signIn(email: string, password: string) {
     const { data, error } = await supabase
-        .auth
-        .signInWithPassword({
-            email: email,
-            password: password
-        })
+        .storage
+        .from("LoafImages")
+        .upload(fileName, file, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: file.type,
+        });
+
+    console.log("UPLOAD DATA:", data);
+    console.log("UPLOAD ERROR:", error);
 
     if (error) {
-        throw new Error('Could not login')
+        throw error;
     }
 
-    return data;
+    return fileName;
 }

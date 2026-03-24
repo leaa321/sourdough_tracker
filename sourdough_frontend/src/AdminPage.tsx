@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import { checkUser, uploadLoaf } from "./service/LoafService"
+import { uploadLoaf, uploadLoafImage } from "./service/LoafService"
 import type { loafUpload } from "./models/loaf";
 import { ToastMessage, useToast } from "./ToastMessage";
+import { checkUser } from "./service/UserService";
 
 
 export function AdminPage() {
@@ -12,6 +13,7 @@ export function AdminPage() {
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [tag, setTag] = useState<string>("");
+    const [file, setFile] = useState<File | null>();
 
     async function init() {
         try {
@@ -34,11 +36,19 @@ export function AdminPage() {
 
     const handleSubmit: React.SubmitEventHandler<HTMLFormElement> = async (formValue) => {
         formValue.preventDefault();
+
+        if (!file) {
+            showToast("add a pic")
+            return;
+        }
+
         try {
+            const imagePath = await uploadLoafImage(file);
+
             const loaf: loafUpload = {
                 title: title,
                 description: description,
-                image_path: "salz.png",
+                image_path: imagePath,
                 tag: tag
             }
             await uploadLoaf(loaf);
@@ -47,6 +57,7 @@ export function AdminPage() {
             setDescription("");
             setTitle("");
             setTag("");
+            setFile(null);
 
         } catch (err) {
             console.error(err);
@@ -90,6 +101,17 @@ export function AdminPage() {
                         name="tag"
                         value={tag}
                         onChange={(t) => setTag(t.target.value)}
+                    />
+                </div>
+                <div className="input-group">
+                    <span className="input-title">Picture: </span>
+                    <input type="file"
+                        accept="image/*"
+                        onChange={(f) => {
+                            const file = f.target.files?.[0] ?? null;
+                            setFile(file);
+                        }
+                        }
                     />
                 </div>
                 <button type="submit">Upload loaf</button>
