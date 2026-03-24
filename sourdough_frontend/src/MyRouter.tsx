@@ -1,13 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
+import { AdminPage } from "./AdminPage";
+import { LoginSection } from "./LoginSection";
 
 
 export function MyRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route index element={<App />}></Route>
-                <Route path="/" element={<App />}></Route>
+                <Route path="/" element={<App />} />
+                <Route path="/login" element={<LoginSection />}></Route>
+                <Route path="/admin" element={<AdminPage />}></Route>
             </Routes>
         </BrowserRouter>
     )

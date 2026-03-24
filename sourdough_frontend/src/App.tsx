@@ -1,8 +1,9 @@
-import './App.css'
-import { getLoafes } from './LoafService';
+import './style/App.scss'
 import { useEffect, useState } from 'react';
 import type { loaf } from './models/loaf';
 import { LoafItem } from './LoafItem';
+import { getLoafes } from './service/LoafService';
+import { Link } from 'react-router-dom';
 
 function App() {
   const [loafes, setLoafes] = useState<loaf[]>([]);
@@ -22,6 +23,8 @@ function App() {
           </li>
         ))}
       </ul>
+
+      <Link to="/login">Login</Link>
     </>
   )
 }
