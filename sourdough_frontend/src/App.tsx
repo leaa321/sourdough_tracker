@@ -25,6 +25,7 @@ function App() {
       </ul>
 
       <Link to="/login">Login</Link>
+      <Link to="/recipes">Recipes</Link>
     </>
   )
 }
