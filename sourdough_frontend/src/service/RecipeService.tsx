@@ -1,4 +1,6 @@
+import type { ingredientUpload, recipe_ingredient_upload, recipeUpload } from "../models/recipe";
 import { supabase } from "../utils/supabase";
+import { checkUser } from "./UserService";
 
 
 export async function getRecipes() {
@@ -34,8 +36,69 @@ export async function getRecipeIngredients() {
         throw new Error("error loading recipes")
     }
 
-    console.log(data);
+    return data;
+}
+
+export async function uploadRecipe(recipe: recipeUpload) {
+    await checkUser();
+
+    const { data, error } = await supabase
+        .from("recipes")
+        .insert([recipe])
+        .select()
+
+    if (error) {
+        throw new Error("error uploading recipe")
+    }
 
     return data;
 }
 
+export async function uploadIngredient(ingredient: ingredientUpload) {
+    await checkUser();
+
+    const { data, error } = await supabase
+        .from("ingredients")
+        .insert([ingredient])
+        .select()
+
+    if (error) {
+        throw new Error("error uploading ingredient")
+    }
+
+    return data;
+}
+
+export async function uploadRecipeIngredient(relation: recipe_ingredient_upload) {
+    await checkUser();
+
+    const { data, error } = await supabase
+        .from("ingredients")
+        .insert([relation])
+
+
+    if (error) throw new Error("error uploading relation")
+
+    return data;
+}
+
+export async function uploadRecipeImage(file: File) {
+    await checkUser();
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${crypto.randomUUID()}.${fileExt}`;
+
+    const { error } = await supabase
+        .storage
+        .from("RecipeImages")
+        .upload(fileName, file, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: file.type,
+        });
+
+    if (error) {
+        throw error;
+    }
+
+    return fileName;
+}

@@ -7,6 +7,13 @@ export type recipe = {
     image_path: string
 }
 
+export type recipeUpload = {
+    title: string,
+    description: string,
+    instructions: string,
+    image_path: string
+}
+
 export type recipe_ingredient = {
     id: number | null,
     created_at: Date,
@@ -28,4 +35,14 @@ export type recipe_ingredient_upload = {
 export type ingredient = {
     id: number,
     title: string
+}
+
+export type ingredientUpload = {
+    title: string
+}
+
+export type partIngredient = {
+    amount: number,
+    unit: string,
+    specification: string
 }
