@@ -45,7 +45,6 @@ export function RecipePage() {
                     );
                 })}
             </ul>
-
         </>
     )
 }

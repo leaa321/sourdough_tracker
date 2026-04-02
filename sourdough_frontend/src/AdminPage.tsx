@@ -5,7 +5,7 @@ import { ToastMessage, useToast } from "./ToastMessage";
 import { checkUser } from "./service/UserService";
 import type { recipe_ingredient_upload, recipeIngredientDraft, recipeUpload } from "./models/recipe";
 import { getIngredientByTitle, uploadIngredient, uploadRecipe, uploadRecipeImage, uploadRecipeIngredient } from "./service/RecipeService";
-import { IngredientSelect } from "./IngredientSelect";
+import { IngredientForm } from "./IngredientForm";
 
 export function AdminPage() {
     const [isLoading, setIsLoading] = useState(true);
@@ -229,7 +229,7 @@ export function AdminPage() {
                 />
             </div>
 
-            <IngredientSelect onAdd={handleAddIngredient} />
+            <IngredientForm onAdd={handleAddIngredient} />
             <ul>
                 {ingredientsToAdd.map((ingredient, index) => (
                     <li key={index}>
