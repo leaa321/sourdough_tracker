@@ -73,7 +73,7 @@ export async function uploadRecipeIngredient(relation: recipe_ingredient_upload)
     await checkUser();
 
     const { data, error } = await supabase
-        .from("ingredients")
+        .from("recipe_ingredients")
         .insert([relation])
 
 
@@ -101,4 +101,15 @@ export async function uploadRecipeImage(file: File) {
     }
 
     return fileName;
+}
+
+export async function getIngredientByTitle(title: string) {
+    const { data, error } = await supabase
+        .from("ingredients")
+        .select()
+        .eq("title", title)
+        .maybeSingle();
+
+    if (error) throw error;
+    return data;
 }

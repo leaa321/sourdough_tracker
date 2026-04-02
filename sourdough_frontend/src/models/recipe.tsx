@@ -41,7 +41,8 @@ export type ingredientUpload = {
     title: string
 }
 
-export type partIngredient = {
+export type recipeIngredientDraft = {
+    title: string
     amount: number,
     unit: string,
     specification: string

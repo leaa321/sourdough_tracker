@@ -3,8 +3,8 @@ import { uploadLoaf, uploadLoafImage } from "./service/LoafService"
 import type { loafUpload } from "./models/loaf";
 import { ToastMessage, useToast } from "./ToastMessage";
 import { checkUser } from "./service/UserService";
-import type { ingredientUpload, recipe_ingredient_upload, recipeUpload } from "./models/recipe";
-import { uploadIngredient, uploadRecipe, uploadRecipeImage, uploadRecipeIngredient } from "./service/RecipeService";
+import type { recipe_ingredient_upload, recipeIngredientDraft, recipeUpload } from "./models/recipe";
+import { getIngredientByTitle, uploadIngredient, uploadRecipe, uploadRecipeImage, uploadRecipeIngredient } from "./service/RecipeService";
 import { IngredientSelect } from "./IngredientSelect";
 
 export function AdminPage() {
@@ -21,8 +21,8 @@ export function AdminPage() {
     const [recipeDescription, setRecipeDescription] = useState<string>("");
     const [recipeInstructions, setRecipeInstructions] = useState<string>("");
     const [recipeFile, setRecipeFile] = useState<File | null>();
+    const [ingredientsToAdd, setIngredientsToAdd] = useState<recipeIngredientDraft[]>([]);
 
-    const [ingredientInputOpen, setIngredientInputOpen] = useState(false);
     async function init() {
         try {
             const user = await checkUser();
@@ -45,8 +45,13 @@ export function AdminPage() {
         init();
     }, [])
 
-    function toggleIngredientInput() {
-        setIngredientInputOpen(prev => !prev);
+
+    function handleAddIngredient(ingredient: recipeIngredientDraft) {
+        setIngredientsToAdd(prev => [...prev, ingredient]);
+    }
+
+    function handleRemoveIngredient(indexToRemove: number) {
+        setIngredientsToAdd(prev => prev.filter((_, index) => index !== indexToRemove));
     }
 
 
@@ -83,9 +88,15 @@ export function AdminPage() {
 
     const handleSubmitRecipe: React.SubmitEventHandler<HTMLFormElement> = async (formValue) => {
         formValue.preventDefault();
+        console.log("test")
 
         if (!recipeFile) {
             showToast("add a pic");
+            return;
+        }
+
+        if (ingredientsToAdd.length === 0) {
+            showToast("add at least one ingredient");
             return;
         }
 
@@ -101,26 +112,39 @@ export function AdminPage() {
 
             let recipeData = await uploadRecipe(recipe);
 
-            const ingredient: ingredientUpload = {
-                title: "test"
+            for (const ingredientDraft of ingredientsToAdd) {
+                const existingIngredient = await getIngredientByTitle(ingredientDraft.title);
+
+                let ingredientId: number;
+
+                if (existingIngredient) {
+                    ingredientId = existingIngredient.id;
+                } else {
+                    const ingredientData = await uploadIngredient({ title: ingredientDraft.title });
+                    ingredientId = ingredientData[0].id;
+                }
+
+                const relation: recipe_ingredient_upload = {
+                    recipe_id: recipeData[0].id,
+                    ingredient_id: ingredientId,
+                    amount: ingredientDraft.amount,
+                    unit: ingredientDraft.unit,
+                    specification: ingredientDraft.specification
+                };
+
+                await uploadRecipeIngredient(relation);
+
+                setRecipeTitle("");
+                setRecipeDescription("");
+                setRecipeInstructions("");
+                setRecipeFile(null);
+                setIngredientsToAdd([]);
             }
 
-            let ingredientData = await uploadIngredient(ingredient);
-
-            const relation: recipe_ingredient_upload = {
-                recipe_id: recipeData.at(0).id,
-                ingredient_id: ingredientData.at(0).id,
-                amount: 2.0,
-                unit: "grams",
-                specification: "test"
-            }
-
-            console.log(relation);
-
-            await uploadRecipeIngredient(relation);
             showToast("Recipe added!")
         } catch (err) {
             console.error(err);
+            showToast("Recipe upload failed");
         }
     }
 
@@ -134,98 +158,113 @@ export function AdminPage() {
 
     return (
         <>
-            <form onSubmit={handleSubmitLoaf}>
-                <div className="input-group">
-                    <span className="input-title">Title: </span>
-                    <input type="text"
-                        name="title"
-                        required
-                        value={title}
-                        onChange={(t) => setTitle(t.target.value)}
-                    />
-                </div>
-                <div className="input-group">
-                    <span className="input-title">Description: </span>
-                    <input type="text"
-                        name="description"
-                        required
-                        value={description}
-                        onChange={(d) => setDescription(d.target.value)}
-                    />
-                </div>
-                <div className="input-group">
-                    <span className="input-title">Tag: </span>
-                    <input type="text"
-                        name="tag"
-                        required
-                        value={tag}
-                        onChange={(t) => setTag(t.target.value)}
-                    />
-                </div>
-                <div className="input-group">
-                    <span className="input-title">Picture: </span>
-                    <input type="file"
-                        required
-                        accept="image/*"
-                        onChange={(f) => {
-                            const file = f.target.files?.[0] ?? null;
-                            setFile(file);
-                        }
-                        }
-                    />
-                </div>
-                <button type="submit">Upload loaf</button>
+            <div className="submit-section">
+                <form onSubmit={handleSubmitLoaf}>
+                    <div className="input-group">
+                        <span className="input-title">Title: </span>
+                        <input type="text"
+                            name="title"
+                            required
+                            value={title}
+                            onChange={(t) => setTitle(t.target.value)}
+                        />
+                    </div>
+                    <div className="input-group">
+                        <span className="input-title">Description: </span>
+                        <input type="text"
+                            name="description"
+                            required
+                            value={description}
+                            onChange={(d) => setDescription(d.target.value)}
+                        />
+                    </div>
+                    <div className="input-group">
+                        <span className="input-title">Tag: </span>
+                        <input type="text"
+                            name="tag"
+                            required
+                            value={tag}
+                            onChange={(t) => setTag(t.target.value)}
+                        />
+                    </div>
+                    <div className="input-group">
+                        <span className="input-title">Picture: </span>
+                        <input type="file"
+                            required
+                            accept="image/*"
+                            onChange={(f) => {
+                                const file = f.target.files?.[0] ?? null;
+                                setFile(file);
+                            }
+                            }
+                        />
+                    </div>
+                    <button type="submit">Upload loaf</button>
 
+                </form>
+            </div>
+
+
+            <form onSubmit={handleSubmitRecipe} id="recipeForm">
             </form>
 
-            <form onSubmit={handleSubmitRecipe}>
-                <div className="input-group">
-                    <span className="input-title">Title: </span>
-                    <input type="text"
-                        name="title"
-                        required
-                        value={recipeTitle}
-                        onChange={(t) => setRecipeTitle(t.target.value)}
-                    />
-                </div>
-                <div className="input-group">
-                    <span className="input-title">Description: </span>
-                    <input type="text"
-                        name="description"
-                        required
-                        value={recipeDescription}
-                        onChange={(d) => setRecipeDescription(d.target.value)}
-                    />
-                </div>
+            <div className="input-group">
+                <span className="input-title">Title: </span>
+                <input type="text"
+                    name="title"
+                    form="recipeForm"
+                    required
+                    value={recipeTitle}
+                    onChange={(t) => setRecipeTitle(t.target.value)}
+                />
+            </div>
+            <div className="input-group">
+                <span className="input-title">Description: </span>
+                <input type="text"
+                    name="description"
+                    form="recipeForm"
+                    required
+                    value={recipeDescription}
+                    onChange={(d) => setRecipeDescription(d.target.value)}
+                />
+            </div>
 
-                <button onClick={toggleIngredientInput} type="button">Add Ingredient</button>
-                {ingredientInputOpen && <IngredientSelect />}
+            <IngredientSelect onAdd={handleAddIngredient} />
+            <ul>
+                {ingredientsToAdd.map((ingredient, index) => (
+                    <li key={index}>
+                        {ingredient.title} - {ingredient.amount} {ingredient.unit} {ingredient.specification}
+                        <button type="button" onClick={() => handleRemoveIngredient(index)}>
+                            remove
+                        </button>
+                    </li>
+                ))}
+            </ul>
 
-                <div className="input-group">
-                    <span className="input-title">Instructions: </span>
-                    <input type="text"
-                        name="instructions"
-                        required
-                        value={recipeInstructions}
-                        onChange={(t) => setRecipeInstructions(t.target.value)}
-                    />
-                </div>
-                <div className="input-group">
-                    <span className="input-title">Picture: </span>
-                    <input type="file"
-                        required
-                        accept="image/*"
-                        onChange={(f) => {
-                            const file = f.target.files?.[0] ?? null;
-                            setRecipeFile(file);
-                        }
-                        }
-                    />
-                </div>
-                <button type="submit">Upload recipe</button>
-
-            </form>
-
+            <div className="input-group">
+                <span className="input-title">Instructions: </span>
+                <input type="text"
+                    name="instructions"
+                    form="recipeForm"
+                    required
+                    value={recipeInstructions}
+                    onChange={(t) => setRecipeInstructions(t.target.value)}
+                />
+            </div>
+            <div className="input-group">
+                <span className="input-title">Picture: </span>
+                <input type="file"
+                    required
+                    form="recipeForm"
+                    accept="image/*"
+                    onChange={(f) => {
+                        const file = f.target.files?.[0] ?? null;
+                        setRecipeFile(file);
+                    }
+                    }
+                />
+            </div>
+            <button type="submit" form="recipeForm">Upload recipe</button>
             <ToastMessage visible={visible} message={message} />
         </>
     )
