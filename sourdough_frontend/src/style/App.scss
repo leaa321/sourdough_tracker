@@ -1,0 +1,126 @@
+:root {
+    --text-size-small: 0.8rem;
+    --text-size-medium-small: 0.9rem;
+    --text-size-medium: 1.1rem;
+    --text-size-large: 1.5rem;
+    --text-size-larger: 2.1rem;
+    --icon-size-larger: 3rem;
+    --icon-size-large: 2.5rem;
+    --icon-size-medium: 1.5rem;
+    --icon-size-small-medium: 1.2rem;
+    --icon-size-small: 1rem;
+    --border-radius: 15px;
+
+    --bg-dark: hsl(24 100% 1%);
+    --bg: hsl(28, 83%, 9%);
+    --bg-light: hsl(36 53% 7%);
+    --text: hsl(35 100% 92%);
+    --text-muted: hsl(35 31% 66%);
+    --highlight: hsl(35 27% 36%);
+    --border: hsl(36 37% 25%);
+    --border-muted: hsl(37 63% 14%);
+    --primary: hsl(36 58% 62%);
+    --secondary: hsl(214 78% 73%);
+    --danger: hsl(9 26% 64%);
+    --warning: hsl(52 19% 57%);
+    --success: hsl(146 17% 59%);
+    --info: hsl(217 28% 65%);
+
+    transition: all ease-in 300ms;
+    background-color: var(--bg);
+    color: var(--text);
+
+    &.light {
+        --bg-dark: oklch(0.92 0.025 76);
+        --bg: oklch(0.96 0.025 76);
+        --bg-light: oklch(1 0.025 76);
+        --text: oklch(0.15 0.05 76);
+        --text-muted: oklch(0.4 0.05 76);
+        --highlight: oklch(1 0.05 76);
+        --border: oklch(0.6 0.05 76);
+        --border-muted: oklch(0.7 0.05 76);
+        --primary: oklch(0.4 0.1 76);
+        --secondary: oklch(0.4 0.1 256);
+        --danger: oklch(0.5 0.05 30);
+        --warning: oklch(0.5 0.05 100);
+        --success: oklch(0.5 0.05 160);
+        --info: oklch(0.5 0.05 260);
+    }
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+    a {
+        color: var(--text-muted);
+    }
+}
+
+body {
+    padding-top: 80px;
+}
+
+@media (width >=1000px) {
+    body {
+        --text-size-small: 1rem;
+        --text-size-medium-small: 1.2rem;
+        --text-size-medium: 1.5rem;
+        --text-size-large: 2rem;
+        --text-size-larger: 2.9rem;
+        --icon-size-larger: 6rem;
+        --icon-size-large: 2.5rem;
+        --icon-size-medium: 3.5rem;
+        --icon-size-small-medium: 2.2rem;
+        --icon-size-small: 1.2rem;
+    }
+}
+
+@media(width > 1500px) {
+    body {
+        --icon-size-medium: 4rem;
+    }
+}
+
+@media(width > 1700px) {
+    body {
+        --icon-size-medium: 5rem;
+    }
+}
+
+@media(height >=751px) {
+    body {
+        --icon-size-medium: 4rem;
+    }
+}
+
+@media (max-height : 750px),
+(max-width: 750px) {
+    body {
+        --icon-size-medium: 3rem;
+    }
+}
+
+@media (max-height : 650px) {
+    body {
+        --icon-size-medium: 2.9rem;
+        --text-size-medium: 1.45rem;
+    }
+}
+
+@media (max-height: 550px) {
+    body {
+        --icon-size-medium: 2.5rem;
+        --text-size-medium: 1.25rem;
+    }
+}
+
+@media (max-height: 400px) {
+    body {
+        --icon-size-medium: 2rem;
+        --text-size-medium: 1.2rem;
+    }
+}
