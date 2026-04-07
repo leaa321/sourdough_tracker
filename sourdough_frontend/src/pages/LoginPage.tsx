@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "../service/UserService";
 import { ToastMessage, useToast } from "../components/ToastMessage";
+import { Header } from "../components/Header";
+import "../style/LoginPage.scss"
 
 type LoginPageProps = {
   onLogin: () => void;
@@ -30,6 +32,8 @@ export function LoginPage({ onLogin }: LoginPageProps) {
 
   return (
     <>
+      <Header></Header>
+
       <form onSubmit={handleSubmit}>
         <div className="input-group">
           <span>Email:</span>
