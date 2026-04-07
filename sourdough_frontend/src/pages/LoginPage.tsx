@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { signIn } from "../service/UserService";
 import { ToastMessage, useToast } from "../components/ToastMessage";
 
-export function LoginPage() {
+type LoginPageProps = {
+  onLogin: () => void;
+};
+
+export function LoginPage({ onLogin }: LoginPageProps) {
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const { visible, message, showToast } = useToast();
@@ -16,6 +20,7 @@ export function LoginPage() {
 
     try {
       await signIn(email, password);
+      onLogin();
       navigate("/admin");
     } catch (err) {
       showToast("Login fehlgeschlagen");

@@ -3,7 +3,11 @@ import { checkUser } from "../service/UserService";
 import { SourdoughForm } from "../components/forms/SourdoughForm";
 import { RecipeForm } from "../components/forms/RecipeForm";
 
-export function AdminPage() {
+type LogOutProps = {
+  onLogOut: () => void;
+}
+
+export function AdminPage({ onLogOut }: LogOutProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
 
@@ -41,6 +45,7 @@ export function AdminPage() {
     <>
       <SourdoughForm></SourdoughForm>
       <RecipeForm></RecipeForm>
+      <button onClick={() => onLogOut()}>Log Out</button>
     </>
   );
 }
