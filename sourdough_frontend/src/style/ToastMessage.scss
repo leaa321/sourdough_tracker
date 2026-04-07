@@ -1,0 +1,16 @@
+.toast {
+    top: 10px;
+    right: 10px;
+    position: fixed;
+    background-color: var(--bg-light);
+    padding: 10px;
+    border-radius: 10px;
+
+    &.success {
+        background-color: var(--success);
+    }
+
+    &.error {
+        background-color: var(--danger);
+    }
+}
