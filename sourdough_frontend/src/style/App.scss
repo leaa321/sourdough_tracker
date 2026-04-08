@@ -55,14 +55,19 @@ footer {
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    min-height: 50px;
+    margin-top: 80px;
+    color: var(--text-muted);
 
     a {
         color: var(--text-muted);
+        font-size: var(--text-size-small);
     }
 }
 
 body {
     padding-top: 100px;
+
 }
 
 @media (width >=1000px) {
