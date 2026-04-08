@@ -18,6 +18,10 @@ form {
             width: 100%;
             border-radius: 5px;
             padding: 8px;
+
+            &::placeholder {
+                font-family: "Funnel Display", Arial, Helvetica, sans-serif;
+            }
         }
     }
 

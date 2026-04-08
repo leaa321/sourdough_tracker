@@ -3,6 +3,7 @@ import type { recipe_ingredient_upload, recipeIngredientDraft, recipeUpload } fr
 import { IngredientForm } from "./IngredientForm";
 import { ToastMessage, useToast } from "../ToastMessage";
 import { getIngredientByTitle, uploadIngredient, uploadRecipe, uploadRecipeImage, uploadRecipeIngredient } from "../../service/RecipeService";
+import "../../style/Form.scss"
 
 export function RecipeForm() {
     const [recipeFile, setRecipeFile] = useState<File | null>();
@@ -90,67 +91,70 @@ export function RecipeForm() {
 
     return (
         <>
+            <div className="submit-section">
+                <form onSubmit={handleSubmitRecipe} id="recipeForm"></form>
 
-            <form onSubmit={handleSubmitRecipe} id="recipeForm"></form>
+                <div className="input-group">
+                    <span className="input-title">Title: </span>
+                    <input
+                        type="text"
+                        name="title"
+                        form="recipeForm"
+                        required
+                    />
+                </div>
+                <div className="input-group">
+                    <span className="input-title">Description: </span>
+                    <input
+                        type="text"
+                        name="description"
+                        form="recipeForm"
+                        required
+                    />
+                </div>
 
-            <div className="input-group">
-                <span className="input-title">Title: </span>
-                <input
-                    type="text"
-                    name="title"
-                    form="recipeForm"
-                    required
-                />
-            </div>
-            <div className="input-group">
-                <span className="input-title">Description: </span>
-                <input
-                    type="text"
-                    name="description"
-                    form="recipeForm"
-                    required
-                />
-            </div>
 
-            <IngredientForm onAdd={handleAddIngredient} />
-            <ul>
-                {ingredientsToAdd.map((ingredient, index) => (
-                    <li key={index}>
-                        {ingredient.title} - {ingredient.amount} {ingredient.unit}{" "}
-                        {ingredient.specification}
-                        <button type="button" onClick={() => handleRemoveIngredient(index)}>
-                            remove
-                        </button>
-                    </li>
-                ))}
-            </ul>
 
-            <div className="input-group">
-                <span className="input-title">Instructions: </span>
-                <input
-                    type="text"
-                    name="instructions"
-                    form="recipeForm"
-                    required
-                />
+                <div className="input-group">
+                    <span className="input-title big-input">Instructions: </span>
+                    <input
+                        type="text"
+                        name="instructions"
+                        form="recipeForm"
+                        required
+                    />
+                </div>
+                <div className="input-group">
+                    <span className="input-title">Picture: </span>
+                    <input
+                        type="file"
+                        required
+                        form="recipeForm"
+                        accept="image/*"
+                        onChange={(f) => {
+                            const file = f.target.files?.[0] ?? null;
+                            setRecipeFile(file);
+                        }}
+                    />
+                </div>
+
+                <IngredientForm onAdd={handleAddIngredient} />
+                <ul className="ingredient-list">
+                    {ingredientsToAdd.map((ingredient, index) => (
+                        <li key={index} className="ingredient-item">
+                            - {ingredient.title}  {ingredient.amount} {ingredient.unit}{" "}
+                            {ingredient.specification}
+                            <button type="button" onClick={() => handleRemoveIngredient(index)}>
+                                remove
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+                <button type="submit" form="recipeForm">
+                    Upload recipe
+                </button>
+                <ToastMessage visible={visible} message={message} type={type}></ToastMessage>
             </div>
-            <div className="input-group">
-                <span className="input-title">Picture: </span>
-                <input
-                    type="file"
-                    required
-                    form="recipeForm"
-                    accept="image/*"
-                    onChange={(f) => {
-                        const file = f.target.files?.[0] ?? null;
-                        setRecipeFile(file);
-                    }}
-                />
-            </div>
-            <button type="submit" form="recipeForm">
-                Upload recipe
-            </button>
-            <ToastMessage visible={visible} message={message} type={type}></ToastMessage>
         </>
     )
 }

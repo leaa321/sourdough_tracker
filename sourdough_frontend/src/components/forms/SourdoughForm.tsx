@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { pastryUpload } from "../../types/pastry"
 import { ToastMessage, useToast } from "../ToastMessage";
 import { uploadPastry, uploadPastryImage } from "../../service/PastryService";
+import "../../style/Form.scss"
 
 export function SourdoughForm() {
     const [file, setFile] = useState<File | null>(null);

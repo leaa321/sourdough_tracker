@@ -1,0 +1,53 @@
+.submit-section {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+
+    .input-group {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+
+        span {
+            align-self: flex-start;
+        }
+
+        input {
+            width: 100%;
+            border-radius: 5px;
+            padding: 8px;
+
+            &::placeholder {
+                font-family: "Funnel Display", Arial, Helvetica, sans-serif;
+            }
+        }
+    }
+
+    .ingredient-list {
+        background-color: var(--bg-dark);
+        border-radius: 10px;
+
+        .ingredient-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            button {
+                padding: 5px;
+                font-size: var(--text-size-small);
+            }
+        }
+    }
+
+
+    button {
+        cursor: pointer;
+        border: 1px solid var(--primary);
+        border-radius: 10px;
+        padding: 10px;
+        align-self: center;
+    }
+}
