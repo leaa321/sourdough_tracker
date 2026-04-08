@@ -32,6 +32,12 @@ export async function uploadLoaf(loaf: loafUpload) {
   return data;
 }
 
+export function getRecipePicture(path: string) {
+  const { data } = supabase.storage.from("RecipeImages").getPublicUrl(path);
+
+  return data.publicUrl;
+}
+
 export async function uploadLoafImage(file: File) {
   await checkUser();
 

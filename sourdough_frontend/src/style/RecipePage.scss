@@ -1,0 +1,13 @@
+.title-section {
+    display: flex;
+    justify-content: center;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+    justify-content: center;
+    padding: 10px;
+}

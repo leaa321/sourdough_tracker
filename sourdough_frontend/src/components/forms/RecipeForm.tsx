@@ -9,7 +9,8 @@ export function RecipeForm() {
     const [ingredientsToAdd, setIngredientsToAdd] = useState<
         recipeIngredientDraft[]
     >([]);
-    const { visible, message, showToast } = useToast();
+    const { visible, message, type, showToast } = useToast();
+
 
     function handleAddIngredient(ingredient: recipeIngredientDraft) {
         setIngredientsToAdd((prev) => [...prev, ingredient]);
@@ -29,12 +30,12 @@ export function RecipeForm() {
         const data = new FormData(form);
 
         if (!recipeFile) {
-            showToast("add a pic");
+            showToast("add a pic", 2000, "error");
             return;
         }
 
         if (ingredientsToAdd.length === 0) {
-            showToast("add at least one ingredient");
+            showToast("add at least one ingredient", 2000, "error");
             return;
         }
 
@@ -78,12 +79,12 @@ export function RecipeForm() {
 
                 setIngredientsToAdd([]);
             }
-            showToast("Recipe added!");
+            showToast("Recipe added!", 2000, "success");
             form.reset();
             setRecipeFile(null);
         } catch (err) {
             console.error(err);
-            showToast("Recipe upload failed");
+            showToast("Recipe upload failed", 2000, "error");
         }
     };
 
@@ -149,7 +150,7 @@ export function RecipeForm() {
             <button type="submit" form="recipeForm">
                 Upload recipe
             </button>
-            <ToastMessage visible={visible} message={message} />
+            <ToastMessage visible={visible} message={message} type={type}></ToastMessage>
         </>
     )
 }

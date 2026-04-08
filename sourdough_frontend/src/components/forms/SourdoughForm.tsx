@@ -5,14 +5,15 @@ import { ToastMessage, useToast } from "../ToastMessage";
 
 export function SourdoughForm() {
     const [file, setFile] = useState<File | null>(null);
-    const { visible, message, showToast } = useToast();
+    const { visible, message, type, showToast } = useToast();
+
 
     const handleSubmitLoaf: React.SubmitEventHandler<HTMLFormElement> = async (formValue) => {
         formValue.preventDefault();
         const data = new FormData(formValue.currentTarget)
 
         if (!file) {
-            showToast("add a pic")
+            showToast("add a pic", 2000, "error")
             return;
         }
         try {
@@ -26,11 +27,12 @@ export function SourdoughForm() {
             }
 
             await uploadLoaf(loaf);
-            showToast("Upload successful");
+            showToast("Upload successful", 2000, "success");
             formValue.currentTarget.reset();
             setFile(null);
         } catch (err) {
             console.error(err);
+            showToast("error uploading loaf", 2000, "error");
         }
     }
 
@@ -75,7 +77,7 @@ export function SourdoughForm() {
                 </div>
                 <button type="submit">Upload loaf</button>
             </form>
-            <ToastMessage visible={visible} message={message} />
+            <ToastMessage visible={visible} message={message} type={type}></ToastMessage>
         </div>
     )
 }

@@ -1,52 +1,30 @@
 import { useEffect, useState } from "react";
 import {
-  type ingredient,
   type recipe,
-  type recipe_ingredient,
 } from "../types/recipe";
+import "../style/RecipePage.scss"
 import {
-  getIngredients,
-  getRecipeIngredients,
   getRecipes,
 } from "../service/RecipeService";
+import { RecipeItem } from "../components/RecipeItem";
 
 export function RecipePage() {
   const [recipes, setRecipes] = useState<recipe[]>([]);
-  const [ingredients, setIngredients] = useState<ingredient[]>([]);
-  const [con, setCon] = useState<recipe_ingredient[]>([]);
 
   useEffect(() => {
     getRecipes().then(setRecipes).catch(console.error);
-
-    getIngredients().then(setIngredients).catch(console.error);
-
-    getRecipeIngredients().then(setCon).catch(console.error);
   }, []);
 
   return (
     <>
+      <div className="title-section">
+        <h2>Recipes</h2>
+      </div>
       <ul>
         {recipes.map((recipe) => {
-          const related = con.filter((c) => c.recipe_id === recipe.id);
           return (
-            <li key={recipe.id}>
-              {recipe.title}
-              <ul>
-                {related.map((c) => {
-                  const ingredient = ingredients.find(
-                    (i) => i.id === c.ingredient_id,
-                  );
-                  return (
-                    <li key={c.id}>
-                      {ingredient?.title} {c.amount} {c.unit}
-                      <br />
-                      <span>{c.specification}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </li>
-          );
+            <RecipeItem key={recipe.id} recipe={recipe} path={recipe.image_path} />
+          )
         })}
       </ul>
     </>
