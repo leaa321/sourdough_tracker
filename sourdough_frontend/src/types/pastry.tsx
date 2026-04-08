@@ -1,4 +1,4 @@
-export type loaf = ({
+export type pastry = ({
     id: number | null,
     created_at: Date | null,
     title: string,
@@ -7,7 +7,7 @@ export type loaf = ({
     tag: string
 })
 
-export type loafUpload = {
+export type pastryUpload = {
     title: string,
     description: string,
     image_path: string,

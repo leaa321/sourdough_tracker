@@ -20,7 +20,7 @@ export function Header() {
             {menuOpen && <div className="menu">
                 <Link to="/" onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}>Home</Link>
                 <Link to="/recipes">Recipes</Link>
-                <Link to="/" onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}>Sourdough</Link>
+                <Link to="/pastries" >Sourdough</Link>
             </div>}
         </header >
     )

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { uploadLoaf, uploadLoafImage } from "../../service/LoafService";
-import type { loafUpload } from "../../types/loaf"
+import type { pastryUpload } from "../../types/pastry"
 import { ToastMessage, useToast } from "../ToastMessage";
+import { uploadPastry, uploadPastryImage } from "../../service/PastryService";
 
 export function SourdoughForm() {
     const [file, setFile] = useState<File | null>(null);
@@ -17,22 +17,22 @@ export function SourdoughForm() {
             return;
         }
         try {
-            const imagePath = await uploadLoafImage(file)
+            const imagePath = await uploadPastryImage(file)
 
-            const loaf: loafUpload = {
+            const pastry: pastryUpload = {
                 title: data.get("title") as string,
                 description: data.get("description") as string,
                 image_path: imagePath,
                 tag: data.get("tag") as string
             }
 
-            await uploadLoaf(loaf);
+            await uploadPastry(pastry);
             showToast("Upload successful", 2000, "success");
             formValue.currentTarget.reset();
             setFile(null);
         } catch (err) {
             console.error(err);
-            showToast("error uploading loaf", 2000, "error");
+            showToast("error uploading pastry", 2000, "error");
         }
     }
 
@@ -75,7 +75,7 @@ export function SourdoughForm() {
                         }}
                     />
                 </div>
-                <button type="submit">Upload loaf</button>
+                <button type="submit">Upload pastry</button>
             </form>
             <ToastMessage visible={visible} message={message} type={type}></ToastMessage>
         </div>

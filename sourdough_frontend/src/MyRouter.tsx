@@ -6,6 +6,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { useState } from "react";
 import { LayoutPage } from "./pages/LayoutPage";
 import Home from "./pages/Home";
+import { PastryPage } from "./pages/PastryPage";
 
 export function MyRouter() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -28,6 +29,7 @@ export function MyRouter() {
         <Route path="/" element={<LayoutPage />} >
           <Route path="" element={<Home />}></Route>
           <Route path="/recipes" element={<RecipePage />} />
+          <Route path="/pastries" element={<PastryPage />} />
           <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
 
           <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>

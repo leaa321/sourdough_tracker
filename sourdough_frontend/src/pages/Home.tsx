@@ -1,6 +1,7 @@
 import "../style/Home.scss";
 import gollum from "../assets/gollum.png";
 import { useEffect, useState } from "react";
+import { RecentPastriesList } from "../components/RecentPastriesList";
 
 function Home() {
   const [timeMinutes, setTimeMinutes] = useState<number>(0);
@@ -48,6 +49,7 @@ function Home() {
         </div>
         <div className="card-grid">
           <h2>Recent pastries</h2>
+          <RecentPastriesList></RecentPastriesList>
           {/* hier 3 mini card nur bild der 3 neusten dinge in loafes */}
         </div>
       </main>

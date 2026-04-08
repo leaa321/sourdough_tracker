@@ -110,3 +110,9 @@ export async function getIngredientByTitle(title: string) {
   if (error) throw error;
   return data;
 }
+
+export function getRecipePicture(path: string) {
+  const { data } = supabase.storage.from("RecipeImages").getPublicUrl(path);
+
+  return data.publicUrl;
+}

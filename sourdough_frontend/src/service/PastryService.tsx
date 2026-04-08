@@ -1,44 +1,53 @@
-import type { loafUpload } from "../types/loaf";
+import type { pastryUpload } from "../types/pastry";
 import { supabase } from "../utils/supabase";
 import { checkUser } from "./UserService";
 
-export async function getLoafes() {
-  const { data, error } = await supabase.from("sourdough_loaves").select();
+export async function getPastries() {
+  const { data, error } = await supabase.from("pastries").select();
 
   if (error) {
-    throw new Error("Error loading loaves");
+    throw new Error("Error loading pastries");
   }
 
   return data;
 }
 
-export function getLoafPicture(path: string) {
+export async function getRecentPastries() {
+  const { data, error } = await supabase
+    .from("pastries")
+    .select()
+    .order("created_at", { ascending: false })
+    .limit(3);
+
+  if (error) {
+    throw new Error("Error loading recent pastries");
+  }
+
+  return data;
+}
+
+export function getPastryPicture(path: string) {
   const { data } = supabase.storage.from("LoafImages").getPublicUrl(path);
 
   return data.publicUrl;
 }
 
-export async function uploadLoaf(loaf: loafUpload) {
+export async function uploadPastry(pastry: pastryUpload) {
   await checkUser();
 
   const { data, error } = await supabase
-    .from("sourdough_loaves")
-    .insert([loaf]);
+    .from("pastries")
+    .insert([pastry]);
 
   if (error) {
-    throw new Error("Error inserting loaf");
+    throw new Error("Error inserting pastry");
   }
 
   return data;
 }
 
-export function getRecipePicture(path: string) {
-  const { data } = supabase.storage.from("RecipeImages").getPublicUrl(path);
 
-  return data.publicUrl;
-}
-
-export async function uploadLoafImage(file: File) {
+export async function uploadPastryImage(file: File) {
   await checkUser();
 
   const fileExt = file.name.split(".").pop();

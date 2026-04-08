@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ingredient, recipe, recipe_ingredient } from "../types/recipe"
-import { getRecipePicture } from "../service/LoafService";
-import { getIngredients, getRecipeIngredients } from "../service/RecipeService";
+import { getIngredients, getRecipeIngredients, getRecipePicture } from "../service/RecipeService";
 import "../style/RecipeItem.scss"
 
 type RecipeItem = {
