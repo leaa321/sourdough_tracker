@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import App from "./pages/App";
 import { AdminPage } from "./pages/AdminPage";
 import { RecipePage } from "./pages/RecipePage";
 import { LoginPage } from "./pages/LoginPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { useState } from "react";
+import { LayoutPage } from "./pages/LayoutPage";
+import Home from "./pages/Home";
 
 export function MyRouter() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -24,12 +25,14 @@ export function MyRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/recipes" element={<RecipePage />} />
-        <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+        <Route path="/" element={<LayoutPage />} >
+          <Route path="" element={<Home />}></Route>
+          <Route path="/recipes" element={<RecipePage />} />
+          <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
 
-        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
-          <Route path="/admin" element={<AdminPage onLogOut={handleLogout} />} />
+          <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+            <Route path="/admin" element={<AdminPage onLogOut={handleLogout} />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
