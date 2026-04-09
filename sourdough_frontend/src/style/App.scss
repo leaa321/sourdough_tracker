@@ -103,13 +103,6 @@ body {
     }
 }
 
-@media (max-height : 750px),
-(max-width: 750px) {
-    body {
-        --icon-size-medium: 3rem;
-    }
-}
-
 @media (max-height : 650px) {
     body {
         --icon-size-medium: 2.9rem;

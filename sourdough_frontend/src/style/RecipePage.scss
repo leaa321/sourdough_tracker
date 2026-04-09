@@ -9,5 +9,50 @@ ul {
     gap: 10px;
     list-style: none;
     justify-content: center;
+    overflow: hidden;
     padding: 10px;
+
+    .recipe-card {
+        background-color: var(--bg-light);
+        padding: 10px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        .text-section {
+            display: flex;
+            flex-direction: column;
+
+            p {
+                align-self: flex-start;
+            }
+
+            h3 {
+                margin: 0;
+                align-self: center;
+            }
+        }
+
+        .bottom-section {
+            display: flex;
+            position: relative;
+            justify-content: center;
+
+            img {
+                width: 100px;
+                object-fit: cover;
+            }
+
+            .arrow {
+                position: absolute;
+                right: 0;
+                top: 80%;
+                transform: translateY(-50%);
+                font-size: var(--icon-size-medium);
+            }
+        }
+
+
+    }
 }

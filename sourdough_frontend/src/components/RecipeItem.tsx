@@ -33,7 +33,7 @@ export function RecipeItem({ recipe, path }: RecipeItem) {
     const related = con.filter((c) => c.recipe_id === recipe.id);
 
     return (
-        <div className="recipe-card">
+        <div className="recipe">
             <li key={recipe.id}>
                 <div className="top-section">
                     <div className="top-section-text">

@@ -6,7 +6,7 @@ import "../style/RecipePage.scss"
 import {
   getRecipes,
 } from "../service/RecipeService";
-import { RecipeItem } from "../components/RecipeItem";
+import { RecipeCard } from "../components/RecipeCard";
 
 export function RecipePage() {
   const [recipes, setRecipes] = useState<recipe[]>([]);
@@ -23,7 +23,7 @@ export function RecipePage() {
       <ul>
         {recipes.map((recipe) => {
           return (
-            <RecipeItem key={recipe.id} recipe={recipe} path={recipe.image_path} />
+            <RecipeCard key={recipe.id} recipe={recipe} path={recipe.image_path} />
           )
         })}
       </ul>

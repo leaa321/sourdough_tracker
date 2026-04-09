@@ -1,0 +1,43 @@
+import { useEffect, useState } from "react";
+import "../style/RecipePage.scss"
+import type { recipe } from "../types/recipe";
+import { getRecipePicture } from "../service/RecipeService";
+import { IoArrowForward } from "react-icons/io5";
+
+type RecipeItem = {
+    recipe: recipe;
+    path: string;
+}
+
+export function RecipeCard({ recipe, path }: RecipeItem) {
+    const [pic, setPic] = useState<string | any>(null);
+
+
+    useEffect(() => {
+        async function load() {
+            try {
+                const url = await getRecipePicture(path);
+                if (url) setPic(url);
+
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        load();
+    });
+    return (
+        <>
+            <li key={recipe.id} className="recipe-card">
+                <div className="text-section">
+                    <h3>{recipe.title}</h3>
+                    <p>{recipe.description}</p>
+                </div>
+                <div className="bottom-section">
+                    <img src={pic} alt="pic of recipe" />
+                    <button className="arrow"><IoArrowForward /></button>
+                </div>
+            </li>
+        </>
+    )
+}
