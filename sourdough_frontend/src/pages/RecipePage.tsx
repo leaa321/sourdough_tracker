@@ -65,33 +65,20 @@ export function RecipePage() {
       <div className="filter-section">
         {tags && <TagFilter tags={tags} onSelectTag={handleSelect} />}
       </div>
-      {selectedTag === "All" ? (
-        <ul>
-          {recipeGroup.map((group) => (
-            <li key={group.tag}>
-              <h4>{group.tag}</h4>
 
-              <ul>
-                {group.recipes.map((recipe) => (
-                  <li key={recipe.id}>
-                    <RecipeCard recipe={recipe} path={recipe.image_path} />
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <ul>
-          {filteredRecipes.map((recipe) => (
-            <RecipeCard
-              key={recipe.id}
-              recipe={recipe}
-              path={recipe.image_path}
-            />
-          ))}
-        </ul>
-      )}
+      <ul>
+        <h4>{selectedTag}</h4>
+        {recipeGroup.map((group) => (
+          <li key={group.tag}>
+            <ul>
+              {group.recipes.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} path={recipe.image_path} />
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+
     </>
   );
 }

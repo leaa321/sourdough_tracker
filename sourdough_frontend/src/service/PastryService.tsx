@@ -78,6 +78,6 @@ export async function getAllPastryTags() {
     throw new Error("error loading tags from recipes")
   }
 
-  const tags = data?.map(t => t.tag);
-  return tags;
+  return [...new Set(data.map(r => r.tag).filter((tag): tag is string => !!tag))];
+
 }
