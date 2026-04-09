@@ -4,14 +4,16 @@ export type recipe = {
     title: string,
     description: string,
     instructions: string,
-    image_path: string
+    image_path: string,
+    time: number
 }
 
 export type recipeUpload = {
     title: string,
     description: string,
     instructions: string,
-    image_path: string
+    image_path: string,
+    time: number
 }
 
 export type recipe_ingredient = {

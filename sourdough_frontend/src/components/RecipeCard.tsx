@@ -32,6 +32,7 @@ export function RecipeCard({ recipe, path }: RecipeItem) {
                 <div className="text-section">
                     <h3>{recipe.title}</h3>
                     <p>{recipe.description}</p>
+                    <span>Estimated time: {recipe.time} minutes</span>
                 </div>
                 <div className="bottom-section">
                     <img src={pic} alt="pic of recipe" />

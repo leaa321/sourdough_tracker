@@ -48,6 +48,7 @@ export function RecipeForm() {
                 description: data.get("description") as string,
                 instructions: data.get("instructions") as string,
                 image_path: imagePath,
+                time: data.get("time") as number
             };
 
             let recipeData = await uploadRecipe(recipe);
@@ -120,6 +121,15 @@ export function RecipeForm() {
                     <input
                         type="text"
                         name="instructions"
+                        form="recipeForm"
+                        required
+                    />
+                </div>
+                <div className="input-group">
+                    <span className="input-title big-input">Time: </span>
+                    <input
+                        type="number"
+                        name="time"
                         form="recipeForm"
                         required
                     />
