@@ -9,12 +9,14 @@ main {
         padding: 20px;
         border-radius: 10px;
         overflow: hidden;
+        box-shadow: var(--box-shadow);
 
         &.gollum {
             display: flex;
             align-items: center;
             flex-direction: column;
             gap: 10px;
+            box-shadow: var(--box-shadow);
 
             h2 {
                 margin: 0;

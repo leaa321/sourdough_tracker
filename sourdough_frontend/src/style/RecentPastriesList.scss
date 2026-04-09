@@ -8,12 +8,13 @@
         flex-direction: column;
         font-size: var(--text-size-medium);
         align-items: center;
-        border: 1px solid var(--border);
         border-radius: 10px;
         padding: 5px;
+        background-color: var(--bg-light);
+        box-shadow: var(--box-shadow);
+    }
 
-        img {
-            width: 100px;
-        }
+    img {
+        width: 100px;
     }
 }

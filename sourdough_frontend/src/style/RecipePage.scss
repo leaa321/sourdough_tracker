@@ -19,6 +19,7 @@ ul {
         display: flex;
         justify-content: center;
         flex-direction: column;
+        box-shadow: var(--box-shadow);
 
         .text-section {
             display: flex;
