@@ -26,6 +26,16 @@ export async function getIngredients() {
   return data;
 }
 
+export async function getRecipeById(recipeId: number) {
+  const { data, error } = await supabase.from("recipes").select().eq("id", recipeId).single();
+
+  if (error) {
+    throw new Error("error loading recipe")
+  }
+
+  return data;
+}
+
 export async function getRecipeIngredients() {
   const { data, error } = await supabase.from("recipe_ingredients").select();
 

@@ -20,6 +20,7 @@ ul {
         justify-content: center;
         flex-direction: column;
         box-shadow: var(--box-shadow);
+        gap: 10px;
 
         .text-section {
             display: flex;
@@ -41,7 +42,8 @@ ul {
             justify-content: center;
 
             img {
-                width: 100px;
+                width: 200px;
+                border-radius: 10px;
                 object-fit: cover;
             }
 

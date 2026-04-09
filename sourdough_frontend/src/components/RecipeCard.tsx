@@ -3,6 +3,7 @@ import "../style/RecipePage.scss"
 import type { recipe } from "../types/recipe";
 import { getRecipePicture } from "../service/RecipeService";
 import { IoArrowForward } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 type RecipeItem = {
     recipe: recipe;
@@ -36,7 +37,7 @@ export function RecipeCard({ recipe, path }: RecipeItem) {
                 </div>
                 <div className="bottom-section">
                     <img src={pic} alt="pic of recipe" />
-                    <button className="arrow"><IoArrowForward /></button>
+                    <Link to={"/recipe/" + recipe.id} className="arrow"><IoArrowForward /></Link>
                 </div>
             </li>
         </>
