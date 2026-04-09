@@ -70,3 +70,14 @@ export async function uploadPastryImage(file: File) {
 
   return fileName;
 }
+
+export async function getAllPastryTags() {
+  const { data, error } = await supabase.from("pastries").select("tag");
+
+  if (error) {
+    throw new Error("error loading tags from recipes")
+  }
+
+  const tags = data?.map(t => t.tag);
+  return tags;
+}

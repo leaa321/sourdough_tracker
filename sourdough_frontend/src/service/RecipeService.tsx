@@ -126,3 +126,14 @@ export function getRecipePicture(path: string) {
 
   return data.publicUrl;
 }
+
+export async function getAllRecipeTags() {
+  const { data, error } = await supabase.from("recipes").select("tag");
+
+  if (error) {
+    throw new Error("error loading tags from recipes")
+  }
+
+  const tags = data?.map(t => t.tag);
+  return tags;
+}

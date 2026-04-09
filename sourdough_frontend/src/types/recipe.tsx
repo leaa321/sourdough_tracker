@@ -5,7 +5,8 @@ export type recipe = {
     description: string,
     instructions: string,
     image_path: string,
-    time: number
+    time: number,
+    tag: string
 }
 
 export type recipeUpload = {
@@ -13,7 +14,8 @@ export type recipeUpload = {
     description: string,
     instructions: string,
     image_path: string,
-    time: number
+    time: number,
+    tag: string
 }
 
 export type recipe_ingredient = {

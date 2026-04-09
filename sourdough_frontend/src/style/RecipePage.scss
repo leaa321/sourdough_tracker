@@ -3,6 +3,11 @@
     justify-content: center;
 }
 
+.filter-section {
+    display: flex;
+    align-items: end;
+}
+
 ul {
     display: flex;
     flex-direction: column;

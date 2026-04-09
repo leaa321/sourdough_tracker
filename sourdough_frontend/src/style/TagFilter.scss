@@ -1,0 +1,31 @@
+.input-section {
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+    .icon-filter {
+        font-size: var(--icon-size-medium);
+    }
+
+    h3 {
+        margin: 0;
+    }
+
+    ul {
+        width: 50%;
+
+        li {
+            background-color: var(--bg-dark);
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+
+            &:focus {
+                background-color: var(--bg-light);
+            }
+        }
+    }
+}
