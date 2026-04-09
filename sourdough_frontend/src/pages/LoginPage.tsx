@@ -24,7 +24,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
       onLogin();
       navigate("/admin");
     } catch (err) {
-      showToast("Login fehlgeschlagen", 2000, "error");
+      showToast("Login failed", 2000, "error");
       console.error(err);
     }
   };
