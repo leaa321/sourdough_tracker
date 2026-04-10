@@ -60,8 +60,8 @@ export function PastryPage() {
             </div>
             <div className="filter-section">
                 {tags && <TagFilter tags={tags} onSelectTag={handleSelect} />}
+                <h4>Filter: {selectedTag}</h4>
             </div>
-            <h4>{selectedTag}</h4>
             {pastryGroup.map((group) => (
                 <PastryList pastries={group.pastries} />
             ))}

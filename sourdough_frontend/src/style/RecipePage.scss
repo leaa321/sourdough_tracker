@@ -5,7 +5,10 @@
 
 .filter-section {
     display: flex;
-    align-items: end;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    gap: 10px;
 }
 
 ul {
@@ -16,6 +19,13 @@ ul {
     justify-content: center;
     overflow: hidden;
     padding: 10px;
+
+    h4 {
+        margin: 0;
+        padding: 0px 10px;
+        color: var(--text-muted);
+    }
+
 
     .recipe-card {
         background-color: var(--bg-light);
@@ -58,6 +68,7 @@ ul {
                 top: 80%;
                 transform: translateY(-50%);
                 font-size: var(--icon-size-medium);
+                color: var(--primary);
             }
         }
 

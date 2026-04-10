@@ -1,30 +1,44 @@
 .input-section {
-    padding: 10px;
+    padding: 5px;
     border-radius: 5px;
-    width: 100%;
     align-items: center;
     display: flex;
     flex-direction: column;
-
-    .icon-filter {
-        font-size: var(--icon-size-medium);
-    }
+    background-color: var(--bg-light);
+    gap: 50px;
 
     h3 {
         margin: 0;
+        display: flex;
+        align-items: center;
+
+        .icon-filter {
+            font-size: var(--icon-size-medium);
+            color: var(--primary);
+        }
     }
 
     ul {
         width: 50%;
+        z-index: 1;
+        gap: 8px;
+        position: fixed;
+        margin-top: 30px;
 
         li {
             background-color: var(--bg-dark);
-            padding: 10px;
+            padding: 5px;
             border-radius: 5px;
             cursor: pointer;
+            width: 40%;
+            align-self: center;
 
             &:focus {
                 background-color: var(--bg-light);
+            }
+
+            &:first-child {
+                background-color: var(--secondary);
             }
         }
     }

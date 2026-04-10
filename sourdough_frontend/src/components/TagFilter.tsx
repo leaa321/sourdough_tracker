@@ -23,7 +23,7 @@ export function TagFilter({ tags, onSelectTag }: TagProps) {
                     <li key="null" onClick={() => {
                         onSelectTag("All")
                         toggleSelect()
-                    }}>Remove</li>
+                    }}>All</li>
                     {tags.map((tag) => (
                         <li key={tag} onClick={() => {
                             onSelectTag(tag)
