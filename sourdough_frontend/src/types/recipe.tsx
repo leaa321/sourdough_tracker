@@ -1,5 +1,5 @@
 export type recipe = {
-    id: number | null,
+    id: number,
     created_at: Date | null,
     title: string,
     description: string,
@@ -9,11 +9,19 @@ export type recipe = {
     tag: string
 }
 
-export type recipeUpload = {
+export type RecipeUpload = {
     title: string,
     description: string,
     instructions: string,
     image_path: string,
+    time: number,
+    tag: string
+}
+
+export type RecipeUpdate = {
+    title: string,
+    description: string,
+    instructions: string,
     time: number,
     tag: string
 }

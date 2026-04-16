@@ -1,13 +1,16 @@
 import type {
   ingredientUpload,
   recipe_ingredient_upload,
-  recipeUpload,
+  RecipeUpdate,
+  RecipeUpload,
 } from "../types/recipe";
 import { supabase } from "../utils/supabase";
 import { checkUser } from "./UserService";
 
 export async function getRecipes() {
-  const { data, error } = await supabase.from("recipes").select();
+  const { data, error } = await supabase.from("recipes")
+    .select()
+    .order("created_at", { ascending: false });
 
   if (error) {
     throw new Error("error loading recipes");
@@ -46,7 +49,7 @@ export async function getRecipeIngredients() {
   return data;
 }
 
-export async function uploadRecipe(recipe: recipeUpload) {
+export async function uploadRecipe(recipe: RecipeUpload) {
   await checkUser();
 
   const { data, error } = await supabase
@@ -137,4 +140,33 @@ export async function getAllRecipeTags(): Promise<string[]> {
   }
 
   return [...new Set(data.map(r => r.tag).filter((tag): tag is string => !!tag))];
+}
+
+export async function deleteRecipeFromDatabase(id: number) {
+  await checkUser();
+
+  const { error: relationError } = await supabase
+    .from("recipe_ingredients")
+    .delete()
+    .eq("recipe_id", id);
+
+  if (relationError) throw relationError;
+
+  const { error: recipeError } = await supabase
+    .from("recipes")
+    .delete()
+    .eq("id", id);
+
+  if (recipeError) throw recipeError;
+}
+
+export async function updateRecipe(id: number, recipeUpdate: RecipeUpdate) {
+  const { data, error } = await supabase
+    .from("recipes")
+    .update(recipeUpdate)
+    .eq("id", id)
+
+  if (error) throw new Error("error updating recipe")
+
+  return data;
 }
