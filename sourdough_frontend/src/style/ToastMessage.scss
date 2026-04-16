@@ -5,6 +5,7 @@
     background-color: var(--bg-light);
     padding: 10px;
     border-radius: 10px;
+    z-index: 10000;
 
     &.success {
         background-color: var(--success);
