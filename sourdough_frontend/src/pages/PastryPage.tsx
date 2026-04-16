@@ -10,6 +10,11 @@ export type pastryGroupTag = {
     tag: string
 }
 
+export type pasrtyGroupDate = {
+    pastries: pastry[],
+    month: Date
+}
+
 export function PastryPage() {
     const [pastries, setPastries] = useState<pastry[]>([]);
     const [tags, setTags] = useState<string[]>();

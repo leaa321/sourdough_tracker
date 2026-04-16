@@ -4,14 +4,20 @@ import { ToastMessage, useToast } from "../ToastMessage";
 import { uploadPastry, uploadPastryImage } from "../../service/PastryService";
 import "../../style/Form.scss"
 
-export function SourdoughForm() {
+export type SourdoughFormProps = {
+    onAdd?: () => void | Promise<void>;
+}
+
+export function SourdoughForm({ onAdd }: SourdoughFormProps) {
     const [file, setFile] = useState<File | null>(null);
     const { visible, message, type, showToast } = useToast();
 
 
-    const handleSubmitLoaf: React.SubmitEventHandler<HTMLFormElement> = async (formValue) => {
+    const handleSubmitPastry: React.SubmitEventHandler<HTMLFormElement> = async (formValue) => {
         formValue.preventDefault();
         const data = new FormData(formValue.currentTarget)
+
+        if (!data) return
 
         if (!file) {
             showToast("add a pic", 2000, "error")
@@ -29,6 +35,7 @@ export function SourdoughForm() {
 
             await uploadPastry(pastry);
             showToast("Upload successful", 2000, "success");
+            await onAdd?.()
             formValue.currentTarget.reset();
             setFile(null);
         } catch (err) {
@@ -39,7 +46,7 @@ export function SourdoughForm() {
 
     return (
         <div className="submit-section">
-            <form onSubmit={handleSubmitLoaf}>
+            <form onSubmit={handleSubmitPastry}>
                 <div className="input-group">
                     <span className="input-title">Title: </span>
                     <input
@@ -50,10 +57,9 @@ export function SourdoughForm() {
                 </div>
                 <div className="input-group">
                     <span className="input-title">Description: </span>
-                    <input
-                        type="text"
+                    <textarea
                         name="description"
-                        required
+                        typeof="text"
                     />
                 </div>
                 <div className="input-group">

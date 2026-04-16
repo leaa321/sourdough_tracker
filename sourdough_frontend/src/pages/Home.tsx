@@ -50,7 +50,6 @@ function Home() {
         <div className="card-grid">
           <h2>Recent pastries</h2>
           <RecentPastriesList></RecentPastriesList>
-          {/* hier 3 mini card nur bild der 3 neusten dinge in loafes */}
         </div>
       </main>
     </>

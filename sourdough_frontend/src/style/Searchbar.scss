@@ -1,21 +1,20 @@
 .search-form {
+    width: 100%;
 
     .input-field {
-        display: flex;
-        align-items: center;
         position: relative;
-        justify-content: center;
 
         input {
-            padding: 5px;
+            padding: 7px;
             border-radius: 5px;
             border: 1px solid var(--primary);
             background-color: var(--bg-light);
+            width: 100%;
         }
 
         .search-icon {
             position: absolute;
-            right: 10px;
+            right: 0px;
             font-size: var(--icon-size-medium);
             background-color: transparent;
             color: var(--primary);

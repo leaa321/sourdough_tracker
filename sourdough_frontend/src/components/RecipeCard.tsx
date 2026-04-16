@@ -3,7 +3,7 @@ import "../style/RecipePage.scss"
 import type { recipe } from "../types/recipe";
 import { getRecipePicture } from "../service/RecipeService";
 import { IoArrowForward } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type RecipeItem = {
     recipe: recipe;
@@ -12,7 +12,7 @@ type RecipeItem = {
 
 export function RecipeCard({ recipe, path }: RecipeItem) {
     const [pic, setPic] = useState<string | any>(null);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function load() {
@@ -29,7 +29,7 @@ export function RecipeCard({ recipe, path }: RecipeItem) {
     });
     return (
         <>
-            <li key={recipe.id} className="recipe-card">
+            <li key={recipe.id} className="recipe-card" onClick={() => navigate("/recipe/" + recipe.id)}>
                 <div className="text-section">
                     <h3>{recipe.title}</h3>
                     <p>{recipe.description}</p>

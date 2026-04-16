@@ -1,11 +1,15 @@
 import { useState } from "react";
-import type { recipe_ingredient_upload, recipeIngredientDraft, recipeUpload } from "../../types/recipe";
+import type { recipe_ingredient_upload, recipeIngredientDraft, RecipeUpload } from "../../types/recipe";
 import { IngredientForm } from "./IngredientForm";
 import { ToastMessage, useToast } from "../ToastMessage";
 import { getIngredientByTitle, uploadIngredient, uploadRecipe, uploadRecipeImage, uploadRecipeIngredient } from "../../service/RecipeService";
 import "../../style/Form.scss"
 
-export function RecipeForm() {
+export type RecipeFormProps = {
+    onAdd?: () => void | Promise<void>;
+}
+
+export function RecipeForm({ onAdd }: RecipeFormProps) {
     const [recipeFile, setRecipeFile] = useState<File | null>();
     const [ingredientsToAdd, setIngredientsToAdd] = useState<
         recipeIngredientDraft[]
@@ -30,6 +34,8 @@ export function RecipeForm() {
         const form = formValue.currentTarget;
         const data = new FormData(form);
 
+        if (!data) return
+
         if (!recipeFile) {
             showToast("add a pic", 2000, "error");
             return;
@@ -43,12 +49,13 @@ export function RecipeForm() {
         try {
             const imagePath = await uploadRecipeImage(recipeFile);
 
-            const recipe: recipeUpload = {
+            const recipe: RecipeUpload = {
                 title: data.get("title") as string,
                 description: data.get("description") as string,
                 instructions: data.get("instructions") as string,
                 image_path: imagePath,
-                time: data.get("time") as number
+                time: Number.parseInt(data.get("time") as string),
+                tag: data.get("tag") as string
             };
 
             let recipeData = await uploadRecipe(recipe);
@@ -82,6 +89,7 @@ export function RecipeForm() {
                 setIngredientsToAdd([]);
             }
             showToast("Recipe added!", 2000, "success");
+            onAdd?.();
             form.reset();
             setRecipeFile(null);
         } catch (err) {
@@ -106,23 +114,21 @@ export function RecipeForm() {
                 </div>
                 <div className="input-group">
                     <span className="input-title">Description: </span>
-                    <input
-                        type="text"
+                    <textarea
+                        typeof="text"
                         name="description"
                         form="recipeForm"
-                        required
-                    />
+                    ></textarea>
                 </div>
 
 
 
                 <div className="input-group">
-                    <span className="input-title big-input">Instructions: </span>
-                    <input
-                        type="text"
+                    <span className="input-title">Instructions: </span>
+                    <textarea
+                        typeof="text"
                         name="instructions"
                         form="recipeForm"
-                        required
                     />
                 </div>
                 <div className="input-group">
@@ -130,6 +136,16 @@ export function RecipeForm() {
                     <input
                         type="number"
                         name="time"
+                        form="recipeForm"
+                        required
+
+                    />
+                </div>
+                <div className="input-group">
+                    <span className="input-title big-input">Tag: </span>
+                    <input
+                        type="text"
+                        name="tag"
                         form="recipeForm"
                         required
                     />

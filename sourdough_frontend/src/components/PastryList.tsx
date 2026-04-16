@@ -8,7 +8,7 @@ export type PastryListProps = {
 
 export function PastryList({ pastries }: PastryListProps) {
     return (
-        <ul id="loafes">
+        <ul id="pastries">
             {pastries.map((pastry: pastry) => (
                 <li key={pastry.id}>
                     <PastryItem pastry={pastry} path={pastry.image_path}></PastryItem>

@@ -5,6 +5,7 @@ header {
     top: 0;
     left: 0;
     position: fixed;
+    z-index: 1000;
 
     nav {
         display: flex;
@@ -24,7 +25,7 @@ header {
         float: right;
         align-items: end;
         gap: 10px;
-        padding: 0px 10px;
+        padding: 5px 10px;
         transition: all ease-in 200ms;
 
         a {
