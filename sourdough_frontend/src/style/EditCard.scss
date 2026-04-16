@@ -1,0 +1,30 @@
+.edit-card {
+    .input-group {
+
+        textarea {
+            height: calc(2.5rem + 4.75rem + 2px);
+            width: 100%;
+            border-radius: 5px;
+            border: 2px solid black;
+        }
+    }
+}
+
+.bottom-section {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+
+    button {
+        border: 1px solid var(--primary);
+        padding: 5px 10px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .delete-icon {
+        color: var(--danger);
+        font-size: var(--icon-size-medium);
+    }
+}

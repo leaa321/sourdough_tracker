@@ -15,6 +15,13 @@
             align-self: flex-start;
         }
 
+        textarea {
+            height: calc(2.5rem + 4.75rem + 2px);
+            width: 100%;
+            border-radius: 5px;
+            border: 2px solid black;
+        }
+
         input {
             width: 100%;
             border-radius: 5px;
@@ -22,6 +29,10 @@
 
             &::placeholder {
                 font-family: "Funnel Display", Arial, Helvetica, sans-serif;
+            }
+
+            &.big-input {
+                height: 100px !important;
             }
         }
     }
