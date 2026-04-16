@@ -1,9 +1,11 @@
-import type { pastryUpload } from "../types/pastry";
+import type { PastryUpdate, pastryUpload } from "../types/pastry";
 import { supabase } from "../utils/supabase";
 import { checkUser } from "./UserService";
 
 export async function getPastries() {
-  const { data, error } = await supabase.from("pastries").select();
+  const { data, error } = await supabase.from("pastries")
+    .select()
+    .order("created_at", { ascending: false });
 
   if (error) {
     throw new Error("Error loading pastries");
@@ -11,6 +13,7 @@ export async function getPastries() {
 
   return data;
 }
+
 
 export async function getRecentPastries() {
   const { data, error } = await supabase
@@ -46,7 +49,6 @@ export async function uploadPastry(pastry: pastryUpload) {
   return data;
 }
 
-
 export async function uploadPastryImage(file: File) {
   await checkUser();
 
@@ -80,4 +82,23 @@ export async function getAllPastryTags() {
 
   return [...new Set(data.map(r => r.tag).filter((tag): tag is string => !!tag))];
 
+}
+
+export async function deletePastryFromDatabase(id: number) {
+  const { data, error } = await supabase.from("pastries").delete().eq('id', id);
+
+  if (error) throw new Error("error deleting pastry with id " + id);
+
+  return data;
+}
+
+export async function updatePastry(id: number, updatedPastry: PastryUpdate) {
+  const { data, error } = await supabase
+    .from("pastries")
+    .update(updatedPastry)
+    .eq("id", id)
+
+  if (error) throw new Error("error updating pastry")
+
+  return data;
 }

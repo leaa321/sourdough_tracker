@@ -3,6 +3,7 @@ import type { recipe, RecipeUpdate } from "../types/recipe"
 import { ToastMessage, useToast } from "./ToastMessage";
 import { deleteRecipeFromDatabase, updateRecipe } from "../service/RecipeService";
 import { IoTrashBinOutline } from "react-icons/io5";
+import "../style/EditCard.scss"
 
 export type EditRecipeProps = {
     recipe: recipe,
@@ -30,8 +31,6 @@ export function EditRecipeCard({ recipe, onSaved, onDeleted }: EditRecipeProps) 
                 tag: tag,
                 time: time
             }
-
-            console.log(recipe.id + " und " + recipeUpdate.title)
             await updateRecipe(recipe.id, recipeUpdate)
             await onSaved?.();
         } catch (err) {
@@ -51,7 +50,7 @@ export function EditRecipeCard({ recipe, onSaved, onDeleted }: EditRecipeProps) 
 
     return (
         <>
-            <form onSubmit={handleEditRecipe}>
+            <form onSubmit={handleEditRecipe} className="edit-card" id="edit-form">
                 <div className="input-group">
                     <span>Title: </span>
                     <input
@@ -96,9 +95,11 @@ export function EditRecipeCard({ recipe, onSaved, onDeleted }: EditRecipeProps) 
                         onChange={(t) => setTime(t.target.valueAsNumber)}
                     />
                 </div>
-                <button type="submit">save</button>
             </form>
-            <button onClick={deleteRecipe}><IoTrashBinOutline /></button>
+            <div className="bottom-section">
+                <button type="submit" form="edit-form">Save</button>
+                <button onClick={deleteRecipe}><IoTrashBinOutline className="delete-icon" /></button>
+            </div>
             <ToastMessage visible={visible} message={message} type={type}></ToastMessage>
         </>)
 }

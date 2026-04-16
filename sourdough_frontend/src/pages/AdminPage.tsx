@@ -111,20 +111,29 @@ export function AdminPage({ onLogOut }: LogOutProps) {
         <div className="details-section">
           <details >
             <summary>Add Pastry</summary>
-            <SourdoughForm></SourdoughForm>
+            <SourdoughForm onAdd={loadPastries}></SourdoughForm>
           </details>
           <details>
             <summary>Add Recipe</summary>
-            <RecipeForm></RecipeForm>
+            <RecipeForm onAdd={loadRecipes}></RecipeForm>
           </details>
           <details>
             <summary>Manage Pastries</summary>
+            <div className="info-section">
+              <span className="text-info-section">Title
+                <span>Description</span>
+              </span>
+              <span>Date</span>
+              <span>Edit</span>
+            </div>
             <ul className="edit-list">
               {pastries.map((pastry) => {
                 return (
-                  <li key={pastry.id} className="delete-item-card">
-                    <h3>{pastry.title}</h3>
-                    <p>{pastry.description}</p>
+                  <li key={pastry.id} className="edit-item-card">
+                    <div className="text-section">
+                      <h3>{pastry.title}</h3>
+                      <p>{pastry.description}</p>
+                    </div>
                     {pastry.created_at
                       ? new Date(pastry.created_at).toLocaleDateString("de-DE")
                       : "no date"}
@@ -136,7 +145,19 @@ export function AdminPage({ onLogOut }: LogOutProps) {
               }
               )}
               {selectedPastry && <Popup
-                content={<EditPastryCard pastry={selectedPastry} />}
+                content={<EditPastryCard
+                  pastry={selectedPastry}
+                  onDeleted={() => {
+                    showToast("pastry deleted", 2000, "success");
+                    setPastryPopupVisible(false);
+                    loadPastries();
+                  }}
+                  onSaved={() => {
+                    showToast("pastry updated", 2000, "success");
+                    setPastryPopupVisible(false);
+                    loadPastries();
+                  }}
+                />}
                 title={selectedPastry.title}
                 isVisible={() => togglePopupPastryEdit(selectedPastry)}
                 visible={isPastryPopupVisible} />
@@ -145,12 +166,21 @@ export function AdminPage({ onLogOut }: LogOutProps) {
           </details>
           <details>
             <summary>Manage Recipes</summary>
+            <div className="info-section">
+              <span className="text-info-section">Title
+                <span>Description</span>
+              </span>
+              <span>Date</span>
+              <span>Edit</span>
+            </div>
             <ul className="edit-list">
               {recipes.map((recipe) => {
                 return (
-                  <li key={recipe.id} className="delete-item-card">
-                    <h3>{recipe.title}</h3>
-                    <p>{recipe.description}</p>
+                  <li key={recipe.id} className="edit-item-card">
+                    <div className="text-section">
+                      <h3>{recipe.title}</h3>
+                      <p>{recipe.description}</p>
+                    </div>
                     {recipe.created_at
                       ? new Date(recipe.created_at).toLocaleDateString("de-DE")
                       : "no date"}
