@@ -22,8 +22,8 @@
         width: 50%;
         z-index: 1;
         gap: 8px;
-        position: fixed;
         margin-top: 30px;
+        position: absolute;
 
         li {
             background-color: var(--bg-dark);
