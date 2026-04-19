@@ -8,12 +8,12 @@ export type SearchProp = {
 export function Searchbar({ onWrite }: SearchProp) {
     return (
         <>
-            <form className="search-form">
+            <div className="search-form">
                 <div className="input-field">
                     <input type="text" name="searchText" onChange={(e) => onWrite(e.target.value)} placeholder="search recipe" />
                     <IoSearchCircleOutline className="search-icon" />
                 </div>
-            </form>
+            </div>
         </>
     )
 }

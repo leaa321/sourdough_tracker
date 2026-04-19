@@ -5,16 +5,17 @@
         position: relative;
 
         input {
-            padding: 7px;
+            padding: 10px;
             border-radius: 5px;
             border: 1px solid var(--primary);
             background-color: var(--bg-light);
             width: 100%;
+            box-sizing: border-box;
         }
 
         .search-icon {
             position: absolute;
-            right: 0px;
+            right: 5px;
             font-size: var(--icon-size-medium);
             background-color: transparent;
             color: var(--primary);

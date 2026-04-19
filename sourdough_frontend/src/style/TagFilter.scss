@@ -19,18 +19,21 @@
     }
 
     ul {
-        width: 50%;
         z-index: 1;
-        gap: 8px;
+        gap: 5px;
         margin-top: 30px;
         position: absolute;
+        background-color: var(--bg-blur);
+        border-radius: 10px;
+        padding: 5px 10px;
 
         li {
             background-color: var(--bg-dark);
             padding: 5px;
             border-radius: 5px;
             cursor: pointer;
-            width: 40%;
+            width: 100%;
+            font-size: var(--text-size-small);
             align-self: center;
 
             &:focus {

@@ -14,6 +14,7 @@
     --bg-dark: hsl(24 100% 1%);
     --bg: hsl(28, 83%, 9%);
     --bg-light: hsl(36 53% 7%);
+    --bg-blur: hsla(38, 44%, 12%, 0.87);
     --text: hsl(35 100% 92%);
     --text-muted: hsl(35 31% 66%);
     --highlight: hsl(35 27% 36%);
@@ -41,6 +42,7 @@
         --bg-dark: oklch(0.92 0.025 76);
         --bg: oklch(0.96 0.025 76);
         --bg-light: oklch(1 0.025 76);
+        --bg-blur: hsla(38, 54%, 7%, 0.213);
         --text: oklch(0.15 0.05 76);
         --text-muted: oklch(0.4 0.05 76);
         --highlight: oklch(1 0.05 76);

@@ -10,6 +10,7 @@ import {
 import { RecipeCard } from "../components/RecipeCard";
 import { TagFilter } from "../components/TagFilter";
 import { Searchbar } from "../components/SearchBar";
+import Fuse, { type FuseResult } from "fuse.js"
 
 export type recipeGroupTag = {
   recipes: recipe[],
@@ -38,33 +39,33 @@ export function RecipePage() {
     setInput(input);
   }
 
+  const fuse = new Fuse(recipes, {
+    keys: ["title"
+    ]
+  })
+
   const filteredRecipes = useMemo(() => {
+    const result = fuse.search(input.trim())
+
     if (selectedTag === "All") {
-      return recipes.filter((recipe) =>
-        recipe.title.trim().toLowerCase().includes(input.trim().toLowerCase())
-      );
+      return result
     }
 
-    return recipes.filter((recipe) =>
-      recipe.tag === selectedTag &&
-      (
-        input.trim() === "" ||
-        recipe.title.trim().toLowerCase().includes(input.trim().toLowerCase())
-      )
+    return result.filter((recipe) =>
+      recipe.item.tag === selectedTag
     );
   }, [recipes, selectedTag, input]);
 
   const recipeGroup = useMemo<recipeGroupTag[]>(() => {
     const groups: Record<string, recipe[]> = {};
 
-    filteredRecipes.forEach((recipe) => {
-      const tag = recipe.tag ?? "No tag";
-
+    filteredRecipes.forEach((rec: FuseResult<recipe>) => {
+      const tag = rec.item.tag ?? "No tag";
       if (!groups[tag]) {
         groups[tag] = [];
       }
 
-      groups[tag].push(recipe);
+      groups[tag].push(rec.item);
     });
 
     return Object.entries(groups).map(([tag, recipes]) => ({
