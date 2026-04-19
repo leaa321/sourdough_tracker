@@ -12,6 +12,15 @@
         padding: 5px;
         background-color: var(--bg-light);
         box-shadow: var(--box-shadow);
+
+        span {
+            white-space: nowrap;
+            width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            justify-content: center;
+        }
     }
 
     img {

@@ -45,7 +45,10 @@ export function RecentPastriesList() {
             <div className="grid">
                 {pastryItems.map((pastry) => (
                     <li key={pastry.pastry.id}>
-                        {pastry.pastry.title}
+                        <span>
+                            {pastry.pastry.title}
+
+                        </span>
                         <img src={pastry.path} alt="picture of pastry" />
                     </li>
                 ))}
