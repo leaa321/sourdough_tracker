@@ -13,7 +13,6 @@ export function RecipeItem({ recipe, path }: RecipeItem) {
     const [con, setCon] = useState<recipe_ingredient[]>([]);
     const [ingredients, setIngredients] = useState<ingredient[]>([]);
 
-
     useEffect(() => {
         async function load() {
             try {

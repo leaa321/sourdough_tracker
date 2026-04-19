@@ -19,6 +19,19 @@ export async function getRecipes() {
   return data;
 }
 
+export async function getIngredientsByRecipeId(recipeId: number) {
+  const ingredientIds: number[] = await getAllIngredientIds(recipeId)
+
+  const { data, error } = await supabase
+    .from("ingredients")
+    .select()
+    .in("id", ingredientIds)
+
+  if (error) throw new Error("error getting ingredients by id")
+
+  return data
+}
+
 export async function getIngredients() {
   const { data, error } = await supabase.from("ingredients").select();
 
@@ -124,7 +137,7 @@ export async function getIngredientByTitle(title: string) {
   return data;
 }
 
-export function getRecipePicture(path: string) {
+export async function getRecipePicture(path: string) {
   const { data } = supabase.storage.from("RecipeImages").getPublicUrl(path);
 
   return data.publicUrl;
@@ -145,6 +158,12 @@ export async function getAllRecipeTags(): Promise<string[]> {
 export async function deleteRecipeFromDatabase(id: number) {
   await checkUser();
 
+  const ingredientIds = await getAllIngredientIds(id)
+
+  if (ingredientIds != null) {
+    await deleteIngredientsFromIngredientDatabase(ingredientIds)
+  }
+
   const { error: relationError } = await supabase
     .from("recipe_ingredients")
     .delete()
@@ -160,6 +179,32 @@ export async function deleteRecipeFromDatabase(id: number) {
   if (recipeError) throw recipeError;
 }
 
+export async function getAllIngredientIds(recipeId: number): Promise<number[]> {
+  const { data, error: ingredientRelationError } = await supabase
+    .from("recipe_ingredients")
+    .select("ingredient_id")
+    .eq("recipe_id", recipeId)
+
+  if (ingredientRelationError) throw new Error("error getting ingredients ids")
+
+  const result: number[] = []
+
+  data.forEach(id => {
+    result.push(parseInt(id.ingredient_id))
+  });
+
+  return result;
+}
+
+export async function deleteIngredientsFromIngredientDatabase(ingredientIds: number[]) {
+  const { error: ingredientError } = await supabase
+    .from("ingredients")
+    .delete()
+    .in('id', ingredientIds)
+
+  if (ingredientError) throw new Error("error deleting ids")
+}
+
 export async function updateRecipe(id: number, recipeUpdate: RecipeUpdate) {
   const { data, error } = await supabase
     .from("recipes")
@@ -169,4 +214,14 @@ export async function updateRecipe(id: number, recipeUpdate: RecipeUpdate) {
   if (error) throw new Error("error updating recipe")
 
   return data;
+}
+
+export async function deleteRecipeIngredientRelation(ingredientId: number, recipeId: number) {
+  const { error } = await supabase
+    .from("recipe_ingredients")
+    .delete()
+    .eq("ingredient_id", ingredientId)
+    .eq("recipe_id", recipeId);
+
+  if (error) throw new Error("error deleting recipe ingredient relation")
 }

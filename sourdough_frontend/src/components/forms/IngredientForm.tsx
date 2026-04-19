@@ -46,14 +46,13 @@ export function IngredientForm({ onAdd }: IngredientSelectProps) {
       <div>
         <details>
           <summary>Add Ingredient</summary>
-          <form onSubmit={handleSubmitIngredient} id="ingredientForm">
+          <form onSubmit={handleSubmitIngredient} >
             <div className="input-group">
               <span className="input-title">Title: </span>
               <input
                 type="text"
                 name="title"
                 required
-                form="ingredientForm"
                 value={title}
                 onChange={(t) => setTitle(t.target.value)}
               />
@@ -64,7 +63,6 @@ export function IngredientForm({ onAdd }: IngredientSelectProps) {
                 type="number"
                 name="description"
                 required
-                form="ingredientForm"
                 value={amount}
                 onChange={(d) => setAmount(d.target.valueAsNumber)}
               />
@@ -73,9 +71,8 @@ export function IngredientForm({ onAdd }: IngredientSelectProps) {
               <span className="input-title">Unit: </span>
               <input
                 type="text"
-                name="tag"
+                name="unit"
                 required
-                form="ingredientForm"
                 value={unit}
                 onChange={(t) => setUnit(t.target.value)}
               />
@@ -84,12 +81,11 @@ export function IngredientForm({ onAdd }: IngredientSelectProps) {
               <span className="input-title">Specification: </span>
               <input
                 type="text"
-                form="ingredientForm"
                 value={specification}
                 onChange={(s) => setSpecification(s.target.value)}
               />
             </div>
-            <button type="submit" form="ingredientForm">
+            <button type="submit" >
               Add ingredient
             </button>
           </form>

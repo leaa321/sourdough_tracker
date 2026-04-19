@@ -19,7 +19,6 @@ export function RecipeCard({ recipe, path }: RecipeItem) {
             try {
                 const url = await getRecipePicture(path);
                 if (url) setPic(url);
-
             } catch (err) {
                 console.error(err);
             }
