@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { type ingredient, type recipe, type recipe_ingredient_upload, type recipeIngredientDraft, type RecipeUpdate } from "../types/recipe"
 import { ToastMessage, useToast } from "./ToastMessage";
-import { deleteRecipeFromDatabase, deleteRecipeIngredientRelation, getIngredientByTitle, getIngredientsByRecipeId, updateRecipe, uploadIngredient, uploadRecipeIngredient } from "../service/RecipeService";
+import { deleteRecipeFromDatabase, deleteRecipeIngredientRelation, getIngredientByTitle, getIngredientsByRecipeId, updateRecipe, uploadIngredient, uploadRecipeIngredientRelation } from "../service/RecipeService";
 import { IoTrashBinOutline } from "react-icons/io5";
 import "../style/EditCard.scss"
 import { EditIngredientCard } from "./EditIngredientCard";
@@ -84,7 +84,7 @@ export function EditRecipeCard({ recipe, onSaved, onDeleted }: EditRecipeProps) 
                 specification: ingredientDraft.specification,
             }
 
-            await uploadRecipeIngredient(relation);
+            await uploadRecipeIngredientRelation(relation);
             showToast("added ingredient", 2000, "success")
             return ingredientId
         } catch (err) {

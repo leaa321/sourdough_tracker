@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { recipe_ingredient_upload, recipeIngredientDraft, RecipeUpload } from "../../types/recipe";
 import { IngredientForm } from "./IngredientForm";
 import { ToastMessage, useToast } from "../ToastMessage";
-import { getIngredientByTitle, uploadIngredient, uploadRecipe, uploadRecipeImage, uploadRecipeIngredient } from "../../service/RecipeService";
+import { getIngredientByTitle, uploadIngredient, uploadRecipe, uploadRecipeImage, uploadRecipeIngredientRelation } from "../../service/RecipeService";
 import "../../style/Form.scss"
 
 export type RecipeFormProps = {
@@ -84,7 +84,7 @@ export function RecipeForm({ onAdd }: RecipeFormProps) {
                     specification: ingredientDraft.specification,
                 };
 
-                await uploadRecipeIngredient(relation);
+                await uploadRecipeIngredientRelation(relation);
 
                 setIngredientsToAdd([]);
             }

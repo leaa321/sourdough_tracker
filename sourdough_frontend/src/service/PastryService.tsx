@@ -14,7 +14,6 @@ export async function getPastries() {
   return data;
 }
 
-
 export async function getRecentPastries() {
   const { data, error } = await supabase
     .from("pastries")

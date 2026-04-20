@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ingredient, recipe, recipe_ingredient } from "../types/recipe"
-import { getIngredients, getRecipeIngredients, getRecipePicture } from "../service/RecipeService";
+import { getAllIngredients, getRecipeIngredientRelations, getRecipePicture } from "../service/RecipeService";
 import "../style/SingleRecipePage.scss"
 
 type RecipeItem = {
@@ -19,8 +19,8 @@ export function RecipeItem({ recipe, path }: RecipeItem) {
                 const url = await getRecipePicture(path);
                 if (url) setPic(url);
 
-                getIngredients().then(setIngredients).catch(console.error);
-                getRecipeIngredients().then(setCon).catch(console.error);
+                getAllIngredients().then(setIngredients).catch(console.error);
+                getRecipeIngredientRelations().then(setCon).catch(console.error);
             } catch (err) {
                 console.error(err);
             }

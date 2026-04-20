@@ -32,7 +32,7 @@ export async function getIngredientsByRecipeId(recipeId: number) {
   return data
 }
 
-export async function getIngredients() {
+export async function getAllIngredients() {
   const { data, error } = await supabase.from("ingredients").select();
 
   if (error) {
@@ -52,7 +52,7 @@ export async function getRecipeById(recipeId: number) {
   return data;
 }
 
-export async function getRecipeIngredients() {
+export async function getRecipeIngredientRelations() {
   const { data, error } = await supabase.from("recipe_ingredients").select();
 
   if (error) {
@@ -92,7 +92,7 @@ export async function uploadIngredient(ingredient: ingredientUpload) {
   return data;
 }
 
-export async function uploadRecipeIngredient(
+export async function uploadRecipeIngredientRelation(
   relation: recipe_ingredient_upload,
 ) {
   await checkUser();
